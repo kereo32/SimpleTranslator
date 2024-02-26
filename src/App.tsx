@@ -1,9 +1,10 @@
-
+import TranslationLayout from "./layouts/TranslationLayout"
 function App() {
 
   return (
     <>
-      selam
+      <h1>Translate</h1>
+      <TranslationLayout />
     </>
   )
 }
