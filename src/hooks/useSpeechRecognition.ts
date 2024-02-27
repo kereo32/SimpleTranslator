@@ -24,7 +24,7 @@ const useSpeechRecognition = () => {
   };
 
   useEffect(() => {
-    if (!recognition) return;
+    if (!recognition) return
     recognition.onresult = (event: any) => {
       const result = Array.from(event.results)
         .map((result: any) => result[0])
@@ -32,13 +32,18 @@ const useSpeechRecognition = () => {
         .join('');
       setTranscript(result);
     };
+    recognition.onerror = (event: any) => {
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+        recognition.abort();
+    };
   }, []);
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
 
     if (transcript) {
-      timeoutId = setTimeout(() => setIsListening(false), 3000); // Set to false if no voice input for 3 seconds
+      timeoutId = setTimeout(() => setIsListening(false), 3000); 
     }
 
     return () => clearTimeout(timeoutId);
