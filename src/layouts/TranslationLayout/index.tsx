@@ -1,7 +1,8 @@
-import Textarea from '../../components/Textarea'
-import React, { useState, useEffect } from 'react'
-import useTranslate from '../../hooks/useTranslate'
-import useSpeechRecognition from '../../hooks/useSpeechRecognition'
+import Textarea from '../../components/Textarea';
+import React, { useState, useEffect } from 'react';
+import useTranslate from '../../hooks/useTranslate';
+import useSpeechRecognition from '../../hooks/useSpeechRecognition';
+import TextHistory from '../../components/TextHistory';
 
 interface TextEntry {
   originalText: string;
@@ -9,51 +10,41 @@ interface TextEntry {
 }
 
 const TranslationLayout = () => {
-  const [currentText, setCurrentText] = useState('')
+  const [currentText, setCurrentText] = useState('');
   const [textHistory, setTextHistory] = useState<TextEntry[]>([]);
-  const { data, isLoading, isError, fetchData, changeLoadState } = useTranslate('https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=tr&api-version=3.0&profanityAction=NoAction&textType=plain')
+  const { data, isLoading, isError, fetchData, changeLoadState } = useTranslate('https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=tr&api-version=3.0&profanityAction=NoAction&textType=plain');
   const { isListening, stopListening, transcript, startListening } = useSpeechRecognition();
+
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
-
-    const fetchDataWithDelay = () => {
-      if (currentText) {
-        fetchData(currentText)
+    const fetchDataWithDelay = (text: string) => {
+      if (text) {
+        fetchData(text);
       }
     };
     if (currentText) {
       changeLoadState(true);
-      timeoutId = setTimeout(fetchDataWithDelay, 2000);
+      timeoutId = setTimeout(() => fetchDataWithDelay(currentText), 2000);
     }
+
     return () => clearTimeout(timeoutId);
   }, [currentText]);
 
   useEffect(() => {
     changeLoadState(false);
-    currentText && data && setTextHistory([...textHistory, { originalText: currentText, translatedText: data as string }]);
-    setCurrentText('')
+    if (data && currentText) {
+      setTextHistory(prevTextHistory => [...prevTextHistory, { originalText: currentText, translatedText: data as string }]);
+      setCurrentText('');
+    }
   }, [data]);
 
-
-
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
-    const fetchDataWithDelay = () => {
-      if (transcript) {
-        fetchData(transcript)
-      }
-    };
-    if (transcript) {
-      changeLoadState(true);
-      timeoutId = setTimeout(fetchDataWithDelay, 2000);
-    }
-    return () => clearTimeout(timeoutId);
-  }, [transcript])
+    setCurrentText(transcript);
+  }, [transcript]);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCurrentText(e.target.value)
-  }
+    setCurrentText(e.target.value);
+  };
 
   return (
     <div className='MainMenuWithOptions'>
@@ -66,14 +57,14 @@ const TranslationLayout = () => {
       </div>
       <div className='buttonsBar'>
         {isListening ?
-          <button onClick={() => { stopListening() }}>Stop Listening</button>
+          <button disabled={isListening} onClick={() => { stopListening() }}>Stop Listening</button>
           :
           <button onClick={() => { startListening() }}>Start Listening</button>
         }
-        <button>TextHistory</button>
       </div>
+      <TextHistory textHistory={textHistory} />
     </div>
-  )
+  );
 }
 
 export default TranslationLayout;

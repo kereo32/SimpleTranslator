@@ -11,7 +11,7 @@ type GenericResponse<T> = {
 }
 
 const useTranslate = <T>(url : string) : GenericResponse<T> => {
-  const [data, setData] = useState<T>({} as T)
+  const [data, setData] = useState<T>('Waiting for input.' as T)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [isError, setIsError] = useState(false)

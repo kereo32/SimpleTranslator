@@ -9,9 +9,9 @@ type TextareaProps = {
 
 const Textarea = ({ disabled, value, setText, placeholder }: TextareaProps) => {
   return (
-    <div>
+    <>
       <textarea placeholder={placeholder} onChange={(e) => setText!(e)} disabled={disabled} rows={6} cols={40} value={value} />
-    </div>
+    </>
   )
 }
 
