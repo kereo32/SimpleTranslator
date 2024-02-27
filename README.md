@@ -2,6 +2,7 @@
 <span style="font-size:1.25em;">**This app uses RapidAPi for translation.**
 
     In order to run it locally, you need to go to https://rapidapi.com/hub, create a new account. Subscribe to https://rapidapi.com/microsoft-azure-org-microsoft-cognitive-services/api/microsoft-translator-text Api.
+    Then go to https://rapidapi.com/microsoft-azure-org-microsoft-cognitive-services/api/microsoft-translator-text.
 
     Change endpoint to translate and get the following keys;
     1- X-RapidAPI-Key
