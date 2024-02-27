@@ -26,8 +26,8 @@ const useTranslate = <T>(url : string) : GenericResponse<T> => {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          'X-RapidAPI-Key': 'bb2dad6918msh7f26a2861ae90d9p11ad74jsnf650212480c2',
-          'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
+          'X-RapidAPI-Key': import.meta.env.VITE_X_RAPID_API_KEY as string,
+          'X-RapidAPI-Host': import.meta.env.VITE_X_RAPID_API_HOST as string
         },
         body: JSON.stringify([
           {

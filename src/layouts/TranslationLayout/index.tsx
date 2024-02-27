@@ -12,7 +12,7 @@ interface TextEntry {
 const TranslationLayout = () => {
   const [currentText, setCurrentText] = useState('');
   const [textHistory, setTextHistory] = useState<TextEntry[]>([]);
-  const { data, isLoading, isError, fetchData, changeLoadState } = useTranslate('https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=tr&api-version=3.0&profanityAction=NoAction&textType=plain');
+  const { data, isLoading, isError, fetchData, changeLoadState } = useTranslate(import.meta.env.VITE_TRANSLATOR_API_URL as string);
   const { isListening, stopListening, transcript, startListening } = useSpeechRecognition();
 
   useEffect(() => {
