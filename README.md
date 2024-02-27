@@ -1,7 +1,7 @@
 # Translator App with TS/React/Sass
 <span style="font-size:1.25em;">**This app uses RapidAPi for translation.**
 
-    In order to run it locally, you need to https://rapidapi.com/hub, create a new account. Subscribe to https://rapidapi.com/microsoft-azure-org-microsoft-cognitive-services/api/microsoft-translator-text Api.
+    In order to run it locally, you need to go to https://rapidapi.com/hub, create a new account. Subscribe to https://rapidapi.com/microsoft-azure-org-microsoft-cognitive-services/api/microsoft-translator-text Api.
 
     Change endpoint to translate and get the following keys;
     1- X-RapidAPI-Key
